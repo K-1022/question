@@ -33,6 +33,13 @@ footer {
 	bottom: 0;
 	background-color: #f2f0eb;
 }
+.samuraitrael-btn:hover .text-font {
+	 font-size: 1.1rem;
+	 color: black;
+ }
+ .text-star {
+	 color: #FFD400;
+ }
 
 .samuraitravel-wrapper {
 	min-height: 100vh;
@@ -130,13 +137,7 @@ footer {
 	 width: 100%;
 	 height: 50%;
  }
- .text-font {
-	 font-size: 1.25rem;
-	 color: black;
- }
- .text-star {
-	 font-style: yellow;
- }
+
 @media screen and (min-width: 140px) {
 	
 .samuraitravel-container{

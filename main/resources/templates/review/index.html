@@ -18,7 +18,9 @@
                          <div class="col-xxl-9 col-xl-10 col-lg-11">
                              <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0">            
-									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
+									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+									  <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li> 
+									  <li class="breadcrumb-item"><form action="@{/houses/__${house.getId()}__}">民宿詳細</a></li>
                                      <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
                                  </ol>
                              </nav> 
@@ -37,8 +39,8 @@
 												 <p class="card-text mb-1">
 													 <small class="text-muted" th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></small>
 												 </p>
-												 <p class="card-text flex-grow-1 text-font">
-													 <small class="text-muted" th:text="${review.getComments()}"></smallclass>
+												 <p class="card-text flex-grow-1 text-font mt-3">
+													 <small class="text-muted" th:text="${review.getComments()}"></small>
 												 </p >
 											 </div>
 										 </div>
@@ -47,20 +49,20 @@
 							 </div>
                              </div>   
 							 <!-- ページネーション -->
-							 <div th:if="${reviewPage.getTotalPages() > 1}" class="d-flex justify-content-center">
+							 <div th:if="${reviewPage.getTotalPages() > 1}" class="d-flex justify-content-center mt-3">
                                  <nav aria-label="民宿一覧ページ">
                                      <ul class="pagination">
                                          <li class="page-item">
                                              <span th:if="${reviewPage.isFirst()}" class="page-link disabled">前</span>
-                                             <a th:unless="${reviewPage.isFirst()}" th:href="@{/admin/review(page = ${reviewPage.getNumber() - 1})}" class="page-link samuraitravel-page-link">前</a>
+                                             <a th:unless="${reviewPage.isFirst()}" th:href="@{/review(page = ${reviewPage.getNumber() - 1})}" class="page-link samuraitravel-page-link">前</a>
                                          </li>
                                          <li th:each="i : ${#numbers.sequence(0, reviewPage.getTotalPages() - 1)}" class="page-item">
                                              <span th:if="${i == reviewPage.getNumber()}" class="page-link active samuraitravel-active" th:text="${i + 1}"></span>
-                                             <a th:unless="${i == reviewPage.getNumber()}" th:href="@{/admin/review(page = ${i})}" class="page-link samuraitravel-page-link" th:text="${i + 1}"></a>
+                                             <a th:unless="${i == reviewPage.getNumber()}" th:href="@{/review(page = ${i})}" class="page-link samuraitravel-page-link" th:text="${i + 1}"></a>
                                          </li>
                                          <li class="page-item">                        
                                              <span th:if="${reviewPage.isLast()}" class="page-link disabled">次</span>
-                                             <a th:unless="${reviewPage.isLast()}" th:href="@{/admin/review(page = ${reviewPage.getNumber() + 1})}" class="page-link samuraitravel-page-link">次</a>
+                                             <a th:unless="${reviewPage.isLast()}" th:href="@{/review(page = ${reviewPage.getNumber() + 1})}" class="page-link samuraitravel-page-link">次</a>
                                          </li>
                                      </ul>
                                  </nav> 

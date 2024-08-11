@@ -31,11 +31,12 @@ private final ReviewRepository reviewRepository;
 		return "review/index";
 	}
 	
-	@GetMapping("review/contribution")
+	@GetMapping("/contribution")
 	public String contribution(Model model) {
-		model.addAttribute("ReviewForm", new ReviewForm());
+		model.addAttribute("reviewForm", new ReviewForm());
 		return "review/contribution";
 	}
+	
 	
 //	@GetMapping("/edit")
 //	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
