@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.samuraitravel.entity.Review;
+import com.example.samuraitravel.form.ReviewForm;
 import com.example.samuraitravel.repository.ReviewRepository;
 
 @Controller
@@ -29,6 +30,22 @@ private final ReviewRepository reviewRepository;
 		
 		return "review/index";
 	}
+	
+	@GetMapping("review/contribution")
+	public String contribution(Model model) {
+		model.addAttribute("ReviewForm", new ReviewForm());
+		return "review/contribution";
+	}
+	
+//	@GetMapping("/edit")
+//	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+//		Review user = reviewRepository.getReferenceById(userDetailsImpl.getUser().getId());
+//		UserEditForm userEditForm = new ReviewEditForm(user.getId(), user.getName());
+//		
+//		model.addAttribute("userEditForm", userEditForm);
+//		
+//		return "user/edit";
+//	}
 
 }
 

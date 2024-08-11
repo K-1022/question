@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS review (
      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
      comments VARCHAR(255) NOT NULL,
      FOREIGN KEY (house_id) REFERENCES houses (id),
-     FOREIGN KEY (user_id) REFERENCES houses (id)
+     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 

@@ -125,6 +125,18 @@ footer {
  .samuraitravel-search-form {
 	 max-width: 300px;
  }
+ 
+ .samuraitravel-wight {
+	 width: 100%;
+	 height: 50%;
+ }
+ .text-font {
+	 font-size: 1.25rem;
+	 color: black;
+ }
+ .text-star {
+	 font-style: yellow;
+ }
 @media screen and (min-width: 140px) {
 	
 .samuraitravel-container{
