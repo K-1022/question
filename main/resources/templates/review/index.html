@@ -20,10 +20,14 @@
                                  <ol class="breadcrumb mb-0">            
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
 									  <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li> 
-<!--									  <li class="breadcrumb-item"><form action="@{/houses/__${house.getId()}__}">民宿詳細</a></li>-->                                          
+									  <li class="breadcrumb-item"><form action="@{/houses/__${house.getId()}__}">民宿詳細</a></li>                                      
                                      <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
                                  </ol>
                              </nav> 
+                             
+                             <div th:if="${successMessage}" class="alert alert-info">
+                                 <span th:text="${successMessage}"></span>
+                             </div>  
                              
                              <h2 class="mb-3 text-center">SAMURAIの宿のレビュー一覧</h2>
                              <div class="container">

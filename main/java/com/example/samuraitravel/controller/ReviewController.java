@@ -7,21 +7,29 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.samuraitravel.entity.Review;
+import com.example.samuraitravel.form.ReviewEditForm;
 import com.example.samuraitravel.form.ReviewForm;
 import com.example.samuraitravel.repository.ReviewRepository;
+import com.example.samuraitravel.service.ReviewService;
 
 @Controller
 @RequestMapping("/review")
 public class ReviewController {
 private final ReviewRepository reviewRepository;
+private final ReviewService reviewService;
 	
-	public ReviewController(ReviewRepository reviewRepository) {
+	public ReviewController(ReviewRepository reviewRepository, ReviewService reviewService) {
 		this.reviewRepository = reviewRepository;
+		this.reviewService = reviewService;
 	}
 	
 	@GetMapping
@@ -39,25 +47,27 @@ private final ReviewRepository reviewRepository;
 		return "review/contribution";
 	}
 	
-    @PostMapping("/review/contribution")
-    public String submitReviewForm(ReviewForm reviewForm, BindingResult bindingResult, Model model) {
-//    	if(bindingResult.hasErrors()) {
-//    		return "review";
-//    	}
-//    	
-    	return "redirect:/thankyou";
+    @PostMapping("/create")
+    public String create(@ModelAttribute @Validated ReviewForm reviewForm, BindingResult bindingResult,  RedirectAttributes redirectAttributes) {
+    	if(bindingResult.hasErrors()) {
+    		return "review";
+    	}
+    	
+    	reviewService.create(reviewForm);
+    	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
+        
+    	return "redirect:/review";
     }
 	
-	
-//	@GetMapping("/edit")
-//	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
-//		Review user = reviewRepository.getReferenceById(userDetailsImpl.getUser().getId());
-//		UserEditForm userEditForm = new ReviewEditForm(user.getId(), user.getName());
-//		
-//		model.addAttribute("userEditForm", userEditForm);
-//		
-//		return "user/edit";
-//	}
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable(name = "id") Integer id, Model model) {
+		Review review = reviewRepository.getReferenceById(id);
+		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getStar(), review.getComments());
+		
+		model.addAttribute("reviewEditForm", reviewEditForm);
+		
+		return "review/edit";
+	}
 
 }
 
