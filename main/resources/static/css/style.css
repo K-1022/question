@@ -33,14 +33,9 @@ footer {
 	bottom: 0;
 	background-color: #f2f0eb;
 }
-.samuraitrael-btn:hover .text-font {
-	 font-size: 1.1rem;
-	 color: black;
+.samuraitrael-btn:hover  {
+	opacity: 0.8;
  }
- .text-star {
-	 color: #FFD400;
- }
-
 .samuraitravel-wrapper {
 	min-height: 100vh;
 	position: relative;

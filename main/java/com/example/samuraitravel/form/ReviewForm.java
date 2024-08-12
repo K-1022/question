@@ -9,7 +9,7 @@ public class ReviewForm {
 	private String star;
 	
 	@NotBlank(message = "コメントを入力してください")
-	private String comment;
+	private String comments;
 	
 
 }

@@ -6,7 +6,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.samuraitravel.entity.Review;
@@ -31,11 +33,20 @@ private final ReviewRepository reviewRepository;
 		return "review/index";
 	}
 	
-	@GetMapping("/contribution")
+	@GetMapping("review/contribution")
 	public String contribution(Model model) {
 		model.addAttribute("reviewForm", new ReviewForm());
 		return "review/contribution";
 	}
+	
+    @PostMapping("/review/contribution")
+    public String submitReviewForm(ReviewForm reviewForm, BindingResult bindingResult, Model model) {
+//    	if(bindingResult.hasErrors()) {
+//    		return "review";
+//    	}
+//    	
+    	return "redirect:/thankyou";
+    }
 	
 	
 //	@GetMapping("/edit")

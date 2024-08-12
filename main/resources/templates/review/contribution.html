@@ -20,21 +20,21 @@
                                  <ol class="breadcrumb mb-0"> 
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
                                      <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li> 
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses/show}">民宿詳細</a></li>                                                          
+                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses/show/{id}(id=${house.id})}">民宿詳細</a></li>                                                          
                                      <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
                                  </ol>
                              </nav>                     
              
                              <h1 class="mb-4 text-center">レビュー投稿</h1>  
                              
-                             <form method="post" th:action="@{review/contribution}" th:object="${reviewForm}" enctype="multipart/form-data">
+                             <form method="post" th:action="@{/admmin/houses/creates}" th:object="${reviewForm}">
 								 <div class="form-group row mb-3">
                                      <div class="col-md-4">
-                                         <label for="name" class="col-form-label text-md-left fw-bold">評価</label>
+                                         <label for="star" class="col-form-label text-md-left fw-bold">評価</label>
                                       </div>
                                      <div class="col-md-7">
 										 <div th:if="${fields.hasErrors('star')}" class="text-danger small mb-2" th:errors="*{star}"></div>
-										 <select>
+										 <select class="form-select" th:field="*{star}">
 											 <option>☆☆☆☆☆</option>
 											 <option>★☆☆☆☆</option>
 											 <option>★★☆☆☆</option>
