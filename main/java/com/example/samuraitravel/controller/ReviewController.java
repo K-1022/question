@@ -1,5 +1,8 @@
 package com.example.samuraitravel.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -35,13 +38,15 @@ private final ReviewService reviewService;
 	@GetMapping
 	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 		Page<Review> reviewPage = reviewRepository.findAll(pageable);
+		List<Review> newReview = reviewRepository.findTop6ByOrderByCreatedAtDesc();
 		
 		model.addAttribute("reviewPage", reviewPage);
+		model.addAttribute("newReview", newReview);
 		
 		return "review/index";
 	}
 	
-	@GetMapping("review/contribution")
+	@GetMapping("/contribution")
 	public String contribution(Model model) {
 		model.addAttribute("reviewForm", new ReviewForm());
 		return "review/contribution";
@@ -50,25 +55,32 @@ private final ReviewService reviewService;
     @PostMapping("/create")
     public String create(@ModelAttribute @Validated ReviewForm reviewForm, BindingResult bindingResult,  RedirectAttributes redirectAttributes) {
     	if(bindingResult.hasErrors()) {
-    		return "review";
+    		return "review/contribution";
     	}
     	
     	reviewService.create(reviewForm);
     	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
         
-    	return "redirect:/review";
+    	return "redirect:/houses/show/{id}";
     }
 	
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable(name = "id") Integer id, Model model) {
-		Review review = reviewRepository.getReferenceById(id);
+	public String edit(@PathVariable(name = "id") Integer Id, Model model, RedirectAttributes redirectAttributes) {
+		Optional<Review> optionalReview = reviewRepository.findById(Id);
+	    
+	    if (optionalReview.isPresent()) {
+		Review review = optionalReview.get();
 		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getStar(), review.getComments());
 		
 		model.addAttribute("reviewEditForm", reviewEditForm);
 		
 		return "review/edit";
+	} else {
+		 redirectAttributes.addFlashAttribute("errorMessage", "指定されたレビューが見つかりません。");
+	        return "redirect:/review";
 	}
 
+	}
 }
 
 

@@ -29,9 +29,7 @@
 							
 							<h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
 							
-							<div th:if="${errorMessage}" class="alert alert-danger">
-								<span th:text="${errorMessage}"></span>
-							</div>
+							
 							
 							<div class="mb-4">
 								<img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}" class="w-100" alt="民宿画像">
@@ -39,7 +37,7 @@
 							</div>
 							
 							<div class="container">
-								<div class="row">
+								<v class="row">
 									<div class="col-lg-8 container mb-4">
 										<div class="row pb-2 mb-2 border-bottom">
 										   <div class="col-4">
@@ -137,15 +135,35 @@
 													<input type="number" class="form-control" th:field="*{numberOfPeople}" min="1">
 												</div>
 												
+												<div th:if="${errorMessage}" class="alert alert-danger">
+								<span th:text="${errorMessage}"></span>
+							</div>
+												
 												<div class="form-group">
 													<button type="submit" class="btn text-white shadow-sm w-100 samuraitravel-btn">予約する</button>
 												</div>
 											</form>
 										</div>
 									</div>
-								</div>	
-								<h1 class="mb-4 text-center">レビュー</h1>
-								<a th:href="@{/review/contribution}" class="btn btn-center text-white shadow-sm w-50 samuraitravel-btn">レビューを投稿する</a>		
+								</div>
+								<div class="col-lg-8 container mb-4">
+								<h2 class="text-center mb-3">レビュー</h2>
+								<div sec:authorize="isAuthenticated()">
+								<a th:href="@{/review/contribution}" class="btn text-white mb-3 w-100 samuraitravel-btn">レビューを投稿する</a>
+								</div>
+								<div class="row row-cols-lg-5 row-cols-2 g-3 mb-5">
+									<div class="col" th:each="newReview : ${newReview}">
+										<a th:href="@{/review/__${newReview.getId()}__}" class="link-dark samuraitravel-card-link">
+											<div class="card h-100">
+												<div class="card-body">
+													<h3 class="card-title " th:text="${review.getId"></h3>
+												</div>
+											</div>
+										</a>
+									</div>
+								</div>
+								</div>
+								
 							</div>
 						</div>				
 					</div>

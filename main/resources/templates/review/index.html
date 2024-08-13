@@ -33,7 +33,7 @@
                              <div class="container">
                             <div class="row">
 								 <div class="col-md-6" th:each="review : ${reviewPage}">
-<!--									 <a th:href="@{/review/__${review.getId()}__}" class="link-dark samuraitravel-card-link" style="text-decoration: none;">-->
+
 										 <div class="card m-1">
                                                  <div class="card-body">                         
 												 <h3 class="card-title " th:text="${review.getName()}"></h3>
@@ -48,7 +48,7 @@
 												 </p >
 											 </div>
 										 </div>
-									 </a>
+									 
 								 </div>
 							 </div>
                              </div>   
