@@ -11,5 +11,11 @@ public class ReviewForm {
 	@NotBlank(message = "コメントを入力してください")
 	private String comments;
 	
+	@NotBlank(message = "名前を入力してください。")
+	private String name;
+	
+
+	
+	
 
 }

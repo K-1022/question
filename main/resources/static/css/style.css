@@ -133,6 +133,9 @@ footer {
 	 height: 50%;
  }
 
+.text-color {
+	color: #0000008C;
+}
 @media screen and (min-width: 140px) {
 	
 .samuraitravel-container{

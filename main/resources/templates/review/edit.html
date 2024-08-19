@@ -20,15 +20,15 @@
 								<ol class="breadcrumb mb-0">
 								    <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
 								    <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>  
-                                    <li class="breadcrumb-item"><a th:href="@{/houses/__${house.getId()}__}">民宿詳細</a></li>
+<!--                                    <li class="breadcrumb-item"><a th:href="@{/houses/__${house.getId()}__}">民宿詳細</a></li>-->
                                     <li class="breadcrumb-item active" aria-current="page">レビュー編集</li>
 								</ol> 
 							</nav>
 							
 							<h1 class="mb-4 text-center">SAMURAIの宿のレビュー編集</h1>
 							
-							<form method="post" th:action="@{/review/__${reviewEditForm.getId()}__/update}" th:object="${reviewEditForm}" enctype="multipart/form-data">
-								<input type="hidden" th:field="*{id}">
+<!--							<form method="post" th:action="@{/review/__${reviewEditForm.getId()}__/update}" th:object="${reviewEditForm}" enctype="multipart/form-data">-->
+<!--								<input type="hidden" th:field="*{id}">-->
 								
 								<div class="form-group row mb-3">
                                      <div class="col-md-4">

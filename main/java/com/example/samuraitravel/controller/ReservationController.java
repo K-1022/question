@@ -77,7 +77,7 @@ public class ReservationController {
 			model.addAttribute("errorMessage", "予約内容に不備があります。");
 			return "houses/show";
 		}
-		
+	
 		redirectAttributes.addFlashAttribute("reservationInputForm", reservationInputForm);
 		
 		return "redirect:/houses/{id}/reservations/confirm";
@@ -120,6 +120,7 @@ public class ReservationController {
 	}
 	*/
 	                            
+                        
 
 }
 

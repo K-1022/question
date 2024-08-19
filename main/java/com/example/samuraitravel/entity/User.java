@@ -12,9 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "users")
-@Data
+
 public class User {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +55,9 @@ public class User {
     
     @Column(name = "updated_at", insertable = false, updatable = false)
     private Timestamp updatedAt;
+
+
+	
 }
 
 

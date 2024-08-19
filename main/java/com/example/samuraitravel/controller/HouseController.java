@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.form.ReservationInputForm;
 import com.example.samuraitravel.repository.HouseRepository;
+import com.example.samuraitravel.repository.ReviewRepository;
 
 @Controller
 @RequestMapping("/houses")
 public class HouseController {
 	private final HouseRepository houseRepository;
+	private final ReviewRepository reviewRepository;
 	
-	public HouseController(HouseRepository houseRepository) {
+	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository) {
 		this.houseRepository = houseRepository;
+		this.reviewRepository = reviewrepository;
 	}
 	
 	@GetMapping
@@ -72,18 +76,34 @@ public class HouseController {
 	}
 	
 	@GetMapping("/{id}")
-	public String show(@PathVariable(name = "id") Integer id, Model model) {
+	public String show(@PathVariable(name = "id") Integer id, Model model, 
+			           @PageableDefault(page = 0, size = 6, sort = "updatedAt", direction = Direction.ASC) Pageable pageable, 
+			           @RequestParam(name = "houseId", required = false) String houseId ) {
 		House house =houseRepository.getReferenceById(id);
+		//Review review = reviewRepository.getReferenceById();
+
+		Page<Review> reviewPage;
+		
+		if (houseId != null) {
+            reviewPage = reviewRepository.findByHouseId(houseId, pageable);  
+
+        } else {
+        	String errorMessage = "まだレビューがありません";
+        	model.addAttribute("errorMessage", errorMessage); 
+        	reviewPage = reviewRepository.findAll(pageable);
+        }  
 		
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
+		model.addAttribute("houseId", houseId);
+		model.addAttribute("reviewPage", reviewPage);
+		
+		System.out.println(houseId);
 		
 		return "houses/show";
 	}
 
 }
-
-
 
 
 

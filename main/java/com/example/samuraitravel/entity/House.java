@@ -10,9 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "houses")
-@Data 
 public class House {
 	 @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,4 +48,9 @@ public class House {
  
      @Column(name = "updated_at", insertable = false, updatable = false)
      private Timestamp updatedAt;
+
+
+
+
+
 }
