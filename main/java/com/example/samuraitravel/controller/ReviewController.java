@@ -48,7 +48,7 @@ private final HouseRepository houseRepository;
 	@GetMapping
 	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 		Page<Review> reviewPage = reviewRepository.findAll(pageable);
-		List<Review> newReview = reviewRepository.findTop6ByOrderByCreatedAtDesc();
+		List<Review> newReview = reviewRepository.findTop6ByOrderByCreatedAtDesc(pageable);
 		
 		model.addAttribute("reviewPage", reviewPage);
 		model.addAttribute("newReview", newReview);
@@ -69,6 +69,8 @@ private final HouseRepository houseRepository;
 		 
 		 if (bindingResult.hasErrors()) {            
              model.addAttribute("house", house);            
+             model.addAttribute("errorMessage", "レビューの内容に不備があります。"); 
+             model.addAttribute("star", star);            
              model.addAttribute("errorMessage", "レビューの内容に不備があります。"); 
              return "review/index";
          }
@@ -108,7 +110,7 @@ private final HouseRepository houseRepository;
     	reviewService.create(reviewRegisterForm);
     	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
         
-    	return "redirect:/review?reserved";
+    	return "redirect:/review?reviewed";
     }
 	
 	@GetMapping("/edit")

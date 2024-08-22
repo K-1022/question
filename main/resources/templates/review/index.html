@@ -20,7 +20,7 @@
                                  <ol class="breadcrumb mb-0">            
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
 									  <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li> 
-									  <li class="breadcrumb-item"><form action="@{/houses/__${house.getId()}__}">民宿詳細</a></li>                                      
+								<!--	  <li class="breadcrumb-item"><a th:href="@{/houses/__${house.getId()}__}">民宿詳細</a></li>    -->                                 
                                      <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
                                  </ol>
                              </nav> 
@@ -30,27 +30,27 @@
                              </div>  
                              
                              <h2 class="mb-3 text-center">SAMURAIの宿のレビュー一覧</h2>
-                             <input type="hidden" th:field="*{houseId}">
-                                 <input type="hidden" th:field="*{userId}">
-                                 <input type="hidden" th:field="*{name}">
-                                 <input type="hidden" th:field="*{star}">
-                                 <input type="hidden" th:field="*{comments}">
+<!--                             <input type="hidden" th:field="*{houseId}">-->
+<!--                                 <input type="hidden" th:field="*{userId}">-->
+<!--                                 <input type="hidden" th:field="*{name}">-->
+<!--                                 <input type="hidden" th:field="*{star}">-->
+<!--                                 <input type="hidden" th:field="*{comments}">-->
                                  
                              <div class="container">
                             <div class="row">
-<!--								 <div class="col-md-6" th:each="review : ${reviewPage}">-->
+								 <div class="col-md-6" th:each="review : ${reviewPage}">
 
 										 <div class="card m-1">
                                                  <div class="card-body">                         
-												 <h3 class="card-title " th:text="${Name}"></h3>
+												 <h3 class="card-title " th:text="${review.getName}"></h3>
 												 <p class="card-text mb-1">
-													 <small class="text-warning" th:text="${Star}"></small>
+													 <small class="text-warning" th:text="${review.getStar}"></small>
 												 </p>
-<!--												 <p class="card-text mb-1">-->
-<!--													 <small class="text-dark" th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></small>-->
-<!--												 </p>-->
+												 <p class="card-text mb-1">
+													 <small class="text-dark" th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></small>
+												 </p>
 												 <p class="card-text flex-grow-1 text-font mt-3">
-													 <small class="text-dark" th:text="${Comments}"></small>
+													 <small class="text-dark" th:text="${review.getComments}"></small>
 												 </p >
 											 </div>
 										 </div>

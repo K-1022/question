@@ -26,6 +26,8 @@ public class ReviewService {
 	@Transactional
 	public void create(ReviewRegisterForm reviewRegisterForm) {
 		Review review = new Review();
+		
+		
 		House house = houseRepository.getReferenceById(reviewRegisterForm.getHouseId());
 		User user = userRepository.getReferenceById(reviewRegisterForm.getUserId());
 		

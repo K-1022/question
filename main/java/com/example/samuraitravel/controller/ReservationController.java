@@ -109,6 +109,8 @@ public class ReservationController {
 		model.addAttribute("reservationRegisterForm", reservationRegisterForm);
 		model.addAttribute("sessionId", sessionId);
 		
+		System.out.println(sessionId);
+		
 		return "reservations/confirm";
 	}
 	/*

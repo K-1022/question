@@ -1,5 +1,7 @@
 package com.example.samuraitravel.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.form.ReservationInputForm;
+import com.example.samuraitravel.form.ReviewForm;
+import com.example.samuraitravel.form.ReviewRegisterForm;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
 
@@ -22,10 +26,12 @@ import com.example.samuraitravel.repository.ReviewRepository;
 public class HouseController {
 	private final HouseRepository houseRepository;
 	private final ReviewRepository reviewRepository;
+	private final ReviewRegisterForm reviewRegisterForm;
 	
-	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository) {
+	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository, ReviewRegisterForm reviewRegisterForm) {
 		this.houseRepository = houseRepository;
 		this.reviewRepository = reviewrepository;
+		this.reviewRegisterForm = reviewRegisterForm;
 	}
 	
 	@GetMapping
@@ -41,7 +47,8 @@ public class HouseController {
 		if(keyword != null && !keyword.isEmpty()) {
 			if(order != null && order.equals("priceAsc")) {
 			   housePage = houseRepository.findByNameLikeOrAddressLikeOrderByPriceAsc("%" + keyword + "%", "%" + keyword + "%", pageable);
-			} else {
+			} 
+			else {
 				housePage = houseRepository.findByNameLikeOrAddressLikeOrderByCreatedAtDesc("%" + keyword + "%", "%" + keyword + "%", pageable);
 			}
 		} else if (area != null && !area.isEmpty()) {
@@ -76,29 +83,33 @@ public class HouseController {
 	}
 	
 	@GetMapping("/{id}")
-	public String show(@PathVariable(name = "id") Integer id, Model model, 
+	public String show(@PathVariable(name = "id") Integer id,  
 			           @PageableDefault(page = 0, size = 6, sort = "updatedAt", direction = Direction.ASC) Pageable pageable, 
-			           @RequestParam(name = "houseId", required = false) String houseId ) {
+			           @RequestParam(name = "houseId", required = false) Integer houseId,
+			           Model model) {
 		House house =houseRepository.getReferenceById(id);
+		Integer Id = reviewRegisterForm.getHouseId();
 		//Review review = reviewRepository.getReferenceById();
-
-		Page<Review> reviewPage;
-		
-		if (houseId != null) {
-            reviewPage = reviewRepository.findByHouseId(houseId, pageable);  
-
-        } else {
-        	String errorMessage = "まだレビューがありません";
-        	model.addAttribute("errorMessage", errorMessage); 
-        	reviewPage = reviewRepository.findAll(pageable);
-        }  
-		
+        
+         List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(houseId); 
+          // reviewPage = reviewRepository.findTop6ByOrderByCreatedAtDesc(pageable);
+        
+	
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
 		model.addAttribute("houseId", houseId);
 		model.addAttribute("reviewPage", reviewPage);
 		
+		
 		System.out.println(houseId);
+//      => null		
+		//System.out.println(house);
+	
+		System.out.println(Id);
+		
+		System.out.println(reviewPage);
+		
+		System.out.println(house.getId());
 		
 		return "houses/show";
 	}
