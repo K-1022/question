@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.form.ReservationInputForm;
-import com.example.samuraitravel.form.ReviewForm;
 import com.example.samuraitravel.form.ReviewRegisterForm;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
@@ -88,7 +87,7 @@ public class HouseController {
 			           @RequestParam(name = "houseId", required = false) Integer houseId,
 			           Model model) {
 		House house =houseRepository.getReferenceById(id);
-		Integer Id = reviewRegisterForm.getHouseId();
+		Review Id = reviewRegisterForm.getHouseId();
 		//Review review = reviewRepository.getReferenceById();
         
          List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(houseId); 
@@ -109,7 +108,7 @@ public class HouseController {
 		
 		System.out.println(reviewPage);
 		
-		System.out.println(house.getId());
+	
 		
 		return "houses/show";
 	}

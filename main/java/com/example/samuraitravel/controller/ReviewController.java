@@ -1,6 +1,5 @@
 package com.example.samuraitravel.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -48,7 +47,7 @@ private final HouseRepository houseRepository;
 	@GetMapping
 	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 		Page<Review> reviewPage = reviewRepository.findAll(pageable);
-		List<Review> newReview = reviewRepository.findTop6ByOrderByCreatedAtDesc(pageable);
+		Page<Review> newReview = reviewRepository.findTop10ByOrderByCreatedAtDesc(null, pageable);
 		
 		model.addAttribute("reviewPage", reviewPage);
 		model.addAttribute("newReview", newReview);
