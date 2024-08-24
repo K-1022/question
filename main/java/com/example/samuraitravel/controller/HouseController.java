@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.form.ReservationInputForm;
-import com.example.samuraitravel.form.ReviewRegisterForm;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
 
@@ -25,12 +24,12 @@ import com.example.samuraitravel.repository.ReviewRepository;
 public class HouseController {
 	private final HouseRepository houseRepository;
 	private final ReviewRepository reviewRepository;
-	private final ReviewRegisterForm reviewRegisterForm;
 	
-	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository, ReviewRegisterForm reviewRegisterForm) {
+	
+	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository) {
 		this.houseRepository = houseRepository;
 		this.reviewRepository = reviewrepository;
-		this.reviewRegisterForm = reviewRegisterForm;
+		
 	}
 	
 	@GetMapping
@@ -71,7 +70,11 @@ public class HouseController {
 			}
 			
 		}
-		
+		System.out.println(housePage);
+		System.out.println(keyword);
+		System.out.println(area);
+		System.out.println(price);
+		System.out.println(order);
 		model.addAttribute("housePage", housePage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("area", area);
@@ -87,16 +90,17 @@ public class HouseController {
 			           @RequestParam(name = "houseId", required = false) Integer houseId,
 			           Model model) {
 		House house =houseRepository.getReferenceById(id);
-		Review Id = reviewRegisterForm.getHouseId();
+		//Review Id = reviewRegisterForm.getHouseId();
 		//Review review = reviewRepository.getReferenceById();
         
-         List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(houseId); 
+         List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(id); 
           // reviewPage = reviewRepository.findTop6ByOrderByCreatedAtDesc(pageable);
         
-	
+	 
+         
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
-		model.addAttribute("houseId", houseId);
+		model.addAttribute("houseId", id);
 		model.addAttribute("reviewPage", reviewPage);
 		
 		
@@ -104,7 +108,7 @@ public class HouseController {
 //      => null		
 		//System.out.println(house);
 	
-		System.out.println(Id);
+		System.out.println(id);
 		
 		System.out.println(reviewPage);
 		
