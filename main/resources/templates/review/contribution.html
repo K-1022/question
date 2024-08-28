@@ -19,9 +19,8 @@
 							 <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0"> 
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li> 
-                                     
-<!--                                     <li class="breadcrumb-item"><a th:href="@{/houses/show/{id}(id=${house.id})}">民宿詳細</a></li>                                                          -->
+                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>                                     
+                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house_id}__">民宿詳細</a></li>                                                         
                                      <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
                                  </ol>
                              </nav>                     

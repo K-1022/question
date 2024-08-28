@@ -110,6 +110,7 @@
 									</div>
 							    </div>
 							    
+<!--							    予約機能（未ログイン時）-->
 							    <div sec:authorize="isAnonymous()" class="col-lg-4 px-0 ps-lg-4 mb-4">
 									<div class="card">
 										<div class="card-body">
@@ -119,6 +120,7 @@
 									</div>
 								</div>
 								
+<!--								予約機能（ログイン時）-->
 								<div sec:authorize="isAuthenticated()" class="col-lg-4 px-0 ps-lg-4 mb-4">
 									<div class="card">
 										<div class="card-body">
@@ -143,12 +145,21 @@
 									</div>
 								</div>
 								
+<!--						　　レビューを表示-->
 							    <div class="col-lg-14 container mb-4">
 								   <h2 class="text-center mb-3">レビュー</h2>
 								     <div sec:authorize="isAuthenticated()">
-								        <a th:href="@{review/contribution}" class="btn text-white mb-3 w-100 samuraitravel-btn">レビューを投稿する</a>
+								       <a th:href="@{review/contribution}" class="btn text-white mb-3 w-100 samuraitravel-btn">レビューを投稿する</a>				       
 								     </div>
 								     
+<!--								 レビューが0件の場合-->
+								     <div th:if="${#lists.isEmpty(reviewPage)}" class="mb-4">
+											 <p class="text-center">まだレビューがありません。</p>
+									 </div>
+									 
+<!--							　　　レビューがある場合-->
+									 <div th:unless="${#lists.isEmpty(reviewPage)}">
+						
 								     <div class="row row-cols-lg-2 row-cols-2 g-3 mb-7">
 										 <div class="col" th:each="review : ${reviewPage}">
 											 <a th:href="@{/review}" class="link-dark samuraitravel-card-link">
@@ -156,15 +167,43 @@
 										           <div class="card h-100">
 												      <div class="card-body">
 													     <div class="container">
-									                        <h5 class="card-title" th:text="${review.getName()}"></h5>
+															 
+															<div class="d-flex justify-content-between flex-wrap">
+															   <h5 class="card-title" th:text="${review.getUser().getName()}"></h5>
+															     <div sec:authorize="isAuthenticated()">
+																 　 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">	 
+															           <div class="justify-content-end align-items-end">
+                                                                          <a th:href="@{/review/__${review.getId()}__/edit}">編集</a>  
+                                                                          <a href="#" class="samuraitravel-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteReviewModal' + review.getId()}">削除</a> 
+                                                                    
+<!--                                                                      削除用モーダル-->
+                                                                          <div class="modal fade" th:id="${'deleteReviewModal' + review.getId()}" tabindex="-1" th:aria-labelledby="${'deleteReviewModalLabel' + review.getId()}">
+																             <div class="modal-dialog">
+																	            <div class="modal-content">
+																		           <div class="modal-header">
+																			          <h5 class="modal-title" th:id="${'deleteReviewModalLabel' + review.getId()}" th:text="${house.getName() + 'を削除してもよろしいですか？'}"></h5>
+																			          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+																		           </div>
+																		           <div class="modal-footer">
+																			          <form method="post" th:action="@{/review/__${review.getId()}__/delete}">
+																				         <button type="submit" class="btn samuraitravel-btn-danger text-white shadow-sm">削除</button>
+																			          </form>
+																		           </div>
+																	            </div>
+																             </div>
+															              </div> 
+															           </div> 
+																    </div>
+															     </div>                   
+                                                            </div> 
 												            <p class="card-text mb-1">
-													            <small class="text-warning" th:text="${review.getStar()}"></small>
+													           <small class="text-warning" th:text="${review.getStar()}"></small>
 												            </p>
 												            <p class="card-text mb-1">
-													            <small class="text-dark" th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></small>
+													           <small class="text-dark" th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></small>
 												            </p>
 												            <p class="card-text flex-grow-1 text-font mt-3">
-													            <small class="text-dark" th:text="${review.getComments()}"></small>
+													           <small class="text-dark" th:text="${review.getComments()}"></small>
 												            </p >
 												         </div>
 												     </div>
@@ -173,12 +212,15 @@
 									        </a>
 						                </div>
 			            		    </div>
+			            		    <a class="nav-link text-center text-color mt-4" th:href="@{/review}">すべてのレビューを見る</a>				
 				                </div>
 			                </div>
+			                
 			                <div th:if="${successMessage}" class="alert alert-info">
                                  <span th:text="${successMessage}"></span>
                              </div>  
-						    <a class="nav-link text-center text-color" th:href="@{/review}">すべてのレビューを見る</a>				
+                            
+                            
 					    </div>
 				    </div>
 		        </div>
@@ -196,50 +238,4 @@
 		<script th:src="@{/js/flatpickr.js}"></script>
 	</body>
 </html>
-
-
-
-
-
-
-<!--										   <a th:href="@{/review/__${review.getId()}__}" class="link-dark samuraitravel-card-link">-->
-
-<!--													 <form -->
-
-
-<!--												 </div>-->
-<!--											  </div>-->
-<!--										    </a>-->
-<!--									    </div>-->
-
-<!--									 </div>-->
-			                        
-<!--					           	</div>		-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,7 +1,5 @@
 package com.example.samuraitravel.controller;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -47,13 +45,11 @@ private final HouseRepository houseRepository;
 	@GetMapping
 	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 		Page<Review> reviewPage = reviewRepository.findAll(pageable);
-		Page<Review> newReview = reviewRepository.findTop10ByOrderByCreatedAtDesc(null, pageable);
-		
+	
 		model.addAttribute("reviewPage", reviewPage);
-		model.addAttribute("newReview", newReview);
 		
 		return "review/index";
-	}
+	}   
 	
 	@GetMapping("/houses/{id}/review/input") 
 	public String input(@PathVariable(name = "id") Integer id,
@@ -100,7 +96,7 @@ private final HouseRepository houseRepository;
 }
 	
 	
-    @PostMapping("house/{houseId}/review/create")
+    @PostMapping("/house/{houseId}/review/create")
     public String create(@ModelAttribute @Validated ReviewRegisterForm reviewRegisterForm, BindingResult bindingResult,  RedirectAttributes redirectAttributes) {
     	if(bindingResult.hasErrors()) {
     		return "review/contribution";
@@ -112,22 +108,31 @@ private final HouseRepository houseRepository;
     	return "redirect:/review?reviewed";
     }
 	
-	@GetMapping("/edit")
-	public String edit(@PathVariable(name = "id") Integer Id, Model model, RedirectAttributes redirectAttributes) {
-		Optional<Review> optionalReview = reviewRepository.findById(Id);
-	    
-	    if (optionalReview.isPresent()) {
-		Review review = optionalReview.get();
+	@GetMapping("review/{id}/edit")
+	public String edit(@PathVariable(name = "id") Integer id, Model model) {
+		Review review = reviewRepository.getReferenceById(id);
 		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getStar(), review.getComments());
 		
 		model.addAttribute("reviewEditForm", reviewEditForm);
 		
-		return "review/edit";
-	} else {
-		 redirectAttributes.addFlashAttribute("errorMessage", "指定されたレビューが見つかりません。");
-	        return "redirect:/review";
+		return "review/{id}/edit";
+	}
+	    
+	@PostMapping("/update")
+	public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		reviewService.update(reviewEditForm);
+		redirectAttributes.addFlashAttribute("successMessage","レビューを編集しました。");
+		
+		return "redirect:/review";
 	}
 
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+		reviewRepository.deleteById(id);
+		
+		redirectAttributes.addFlashAttribute("successMessage", "民宿を削除しました。");
+		
+		return "redirect:/houses/show";
 	}
 }
 

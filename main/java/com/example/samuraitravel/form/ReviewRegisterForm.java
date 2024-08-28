@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ReviewRegisterForm {
-
-	
 	private Integer houseId;
 	
 	private Integer userId;

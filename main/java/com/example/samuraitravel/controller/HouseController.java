@@ -70,11 +70,7 @@ public class HouseController {
 			}
 			
 		}
-		System.out.println(housePage);
-		System.out.println(keyword);
-		System.out.println(area);
-		System.out.println(price);
-		System.out.println(order);
+		
 		model.addAttribute("housePage", housePage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("area", area);
@@ -85,35 +81,19 @@ public class HouseController {
 	}
 	
 	@GetMapping("/{id}")
-	public String show(@PathVariable(name = "id") Integer id,  
-			           @PageableDefault(page = 0, size = 6, sort = "updatedAt", direction = Direction.ASC) Pageable pageable, 
+	public String show(@PathVariable(name = "id") Integer id,  		         
 			           @RequestParam(name = "houseId", required = false) Integer houseId,
 			           Model model) {
+		
 		House house =houseRepository.getReferenceById(id);
-		//Review Id = reviewRegisterForm.getHouseId();
-		//Review review = reviewRepository.getReferenceById();
         
          List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(id); 
-          // reviewPage = reviewRepository.findTop6ByOrderByCreatedAtDesc(pageable);
-        
-	 
-         
+          
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
 		model.addAttribute("houseId", id);
 		model.addAttribute("reviewPage", reviewPage);
-		
-		
-		System.out.println(houseId);
-//      => null		
-		//System.out.println(house);
-	
-		System.out.println(id);
-		
-		System.out.println(reviewPage);
-		
-	
-		
+			
 		return "houses/show";
 	}
 
