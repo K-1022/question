@@ -19,20 +19,22 @@
 							 <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0"> 
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>                                     
-                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house_id}__">民宿詳細</a></li>                                                         
+                                     <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>                                     
+                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>                                                         
                                      <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
                                  </ol>
                              </nav>                     
              
                              <h1 class="mb-4 text-center">ペンション SAMURAIのレビュー投稿</h1>  
                              
-                             <form method="post" th:action="@{/houses/__${house.getId()}__/review/create}" th:object="${reviewForm}">
-								 <input type="hidden" th:field="*{houseId}">
-                                 <input type="hidden" th:field="*{userId}">
-                                 <input type="hidden" th:field="*{star}">
-                                 <input type="hidden" th:field="*{comments}">
-                                 <input type="hidden" th:field="*{name}">
+<!--                             <div th:object="${reviewForm}">-->
+                             
+                             <form method="post" th:action="@{/house/{houseId}/review/create}" th:object="${reviewForm}">
+<!--								 <input type="hidden" th:field="*{houseId}">-->
+<!--                                 <input type="hidden" th:field="*{userId}">-->
+<!--                                 <input type="hidden" th:field="*{star}">-->
+<!--                                 <input type="hidden" th:field="*{comments}">-->
+<!--                                 <input type="hidden" th:field="*{name}">-->
                                  
 								 <div class="form-group row mb-3">
                                      <div class="col-md-4">
@@ -65,7 +67,8 @@
 									 <div class="form-group d-flex justify-content-center my-4">
                                      <button type="submit" class="btn text-white shadow-sm w-50 samuraitravel-btn">投稿</button>
                                  </div>
-                             </form>
+                             </div>
+<!--                             </form>-->
                              
                          </div>
                      </div>

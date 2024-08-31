@@ -149,7 +149,7 @@
 							    <div class="col-lg-14 container mb-4">
 								   <h2 class="text-center mb-3">レビュー</h2>
 								     <div sec:authorize="isAuthenticated()">
-								       <a th:href="@{review/contribution}" class="btn text-white mb-3 w-100 samuraitravel-btn">レビューを投稿する</a>				       
+								       <a th:href="@{/houses/{houseId}/review/contribution(houseId=${house.id})}" class="btn text-white mb-3 w-100 samuraitravel-btn">レビューを投稿する</a>				       
 								     </div>
 								     
 <!--								 レビューが0件の場合-->
@@ -173,9 +173,9 @@
 															     <div sec:authorize="isAuthenticated()">
 																 　 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">	 
 															           <div class="justify-content-end align-items-end">
-                                                                          <a th:href="@{/review/__${review.getId()}__/edit}">編集</a>  
+                                                                          <a th:href="@{/houses/__${house.getId()}__/review/__${review.getId()}__/edit}">編集</a>  
                                                                           <a href="#" class="samuraitravel-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteReviewModal' + review.getId()}">削除</a> 
-                                                                    
+                                                                       
 <!--                                                                      削除用モーダル-->
                                                                           <div class="modal fade" th:id="${'deleteReviewModal' + review.getId()}" tabindex="-1" th:aria-labelledby="${'deleteReviewModalLabel' + review.getId()}">
 																             <div class="modal-dialog">

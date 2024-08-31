@@ -7,7 +7,7 @@ import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.entity.User;
 import com.example.samuraitravel.form.ReviewEditForm;
-import com.example.samuraitravel.form.ReviewRegisterForm;
+import com.example.samuraitravel.form.ReviewForm;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
 import com.example.samuraitravel.repository.UserRepository;
@@ -24,19 +24,31 @@ public class ReviewService {
         this.userRepository = userRepository;  
 	}
 	
+//	@Transactional
+//	public void create(ReviewRegisterForm reviewRegisterForm) {
+//		Review review = new Review();
+//		
+//		
+//		House house = houseRepository.getReferenceById(reviewRegisterForm.getHouseId());
+//		User user = userRepository.getReferenceById(reviewRegisterForm.getUserId());
+//		
+//		review.setHouse(house);
+//		review.setUser(user);
+//		review.setName(reviewRegisterForm.getName());
+//		review.setStar(reviewRegisterForm.getStar());
+//		review.setComments(reviewRegisterForm.getComments());
+//		
+//		reviewRepository.save(review);
+//	}
+	
 	@Transactional
-	public void create(ReviewRegisterForm reviewRegisterForm) {
+	public void create(ReviewForm reviewForm, User user, House houseId) {
 		Review review = new Review();
 		
-		
-		House house = houseRepository.getReferenceById(reviewRegisterForm.getHouseId());
-		User user = userRepository.getReferenceById(reviewRegisterForm.getUserId());
-		
-		review.setHouse(house);
+		review.setStar(reviewForm.getStar());
+		review.setComments(reviewForm.getComments());
 		review.setUser(user);
-		review.setName(reviewRegisterForm.getName());
-		review.setStar(reviewRegisterForm.getStar());
-		review.setComments(reviewRegisterForm.getComments());
+		review.setHouse(houseId);
 		
 		reviewRepository.save(review);
 	}
@@ -50,5 +62,7 @@ public class ReviewService {
 		
 		reviewRepository.save(review);
 	}
+
+
 
 }
