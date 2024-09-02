@@ -20,7 +20,7 @@
                                  <ol class="breadcrumb mb-0"> 
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
                                      <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>                                     
-                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>                                                         
+                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>                                                     
                                      <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
                                  </ol>
                              </nav>                     
@@ -29,7 +29,7 @@
                              
 <!--                             <div th:object="${reviewForm}">-->
                              
-                             <form method="post" th:action="@{/house/{houseId}/review/create}" th:object="${reviewForm}">
+                             <form method="post" th:action="@{/houses/__${houseId}__/review/create}" th:object="${reviewForm}">
 <!--								 <input type="hidden" th:field="*{houseId}">-->
 <!--                                 <input type="hidden" th:field="*{userId}">-->
 <!--                                 <input type="hidden" th:field="*{star}">-->
@@ -60,7 +60,7 @@
                                     </div>       	 
 								    <div class="col-md-8">
 										 <div th:if="${#fields.hasErrors('comments')}" class="text-danger small mb-2" th:errors="*{comments}"></div>
-										 <textarea class="form-control" th:fields="*{comments}" cols="30" rows="5"></textarea>
+										 <textarea class="form-control" th:field="*{comments}" cols="30" rows="5"></textarea>
 								    </div>
 							    </div> 
 										
@@ -68,7 +68,7 @@
                                      <button type="submit" class="btn text-white shadow-sm w-50 samuraitravel-btn">投稿</button>
                                  </div>
                              </div>
-<!--                             </form>-->
+                            </form>
                              
                          </div>
                      </div>

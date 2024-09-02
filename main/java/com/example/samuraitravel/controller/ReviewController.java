@@ -58,7 +58,7 @@ private final HouseRepository houseRepository;
 		return "review/contribution";
 	}
 	
-    @PostMapping("/house/{houseId}/review/create")
+    @PostMapping("/houses/{houseId}/review/create")
     public String create(@PathVariable(name = "houseId") Integer houseId,
     		             @ModelAttribute @Validated ReviewForm reviewForm, 
     		             BindingResult bindingResult,
@@ -72,7 +72,7 @@ private final HouseRepository houseRepository;
     	if(bindingResult.hasErrors()) {
     		model.addAttribute("reviewForm", reviewForm);
     		
-    		return "review/contribution";
+    		return "review/index";
     	}
     	
     	User user = userDetailsImpl.getUser();
@@ -97,7 +97,7 @@ private final HouseRepository houseRepository;
 		return "review/edit";
 	}
 	    
-	@PostMapping("/review/{reviewId}/update")
+	@PostMapping("houses/{houseId}/review/{reviewId}/update")
 	public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		reviewService.update(reviewEditForm);
 		redirectAttributes.addFlashAttribute("successMessage","レビューを編集しました。");

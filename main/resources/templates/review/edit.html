@@ -19,7 +19,7 @@
 							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 								<ol class="breadcrumb mb-0">
 								    <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-								    <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>  
+								    <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>  
                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">レビュー編集</li>
 								</ol> 
@@ -27,7 +27,7 @@
 							
 							<h1 class="mb-4 text-center">SAMURAIの宿のレビュー編集</h1>
 							
-							<form method="post" th:action="@{/review/__${reviewEditForm.getId()}__/update}" th:object="${reviewEditForm}" enctype="multipart/form-data">
+							<form method="post" th:action="@{houses/{houseId}/review/{reviewId}/update}" th:object="${reviewEditForm}" enctype="multipart/form-data">
 								<input type="hidden" th:field="*{id}">
 								
 								<div class="form-group row mb-3">
@@ -36,19 +36,17 @@
                                       </div>
                                      <div class="col-md-8">
 										 <div th:if="${#fields.hasErrors('star')}" class="text-danger small mb-2" th:errors="*{star}"></div>
-<!--										 <select class="form-select form-control text-warning mb-3" th:field="*{star}">-->
-	<div>
-											 <select class="form-select form-control" th:field="*{star}">
-												 <input class="form-select form-control" th:field="*{star}">
-											 <option value="0"></option>
-											 <option value="1" class="text-warning">☆☆☆☆☆</option>
-											 <option value="1" class="text-warning">★☆☆☆☆</option>
-											 <option value="1" class="text-warning">★★☆☆☆</option>
-											 <option value="1" class="text-warning">★★★☆☆</option>
-											 <option value="1" class="text-warning">★★★★☆</option>
-											 <option value="1" class="text-warning">★★★★★</option>
-										 </select>
-									 </div>	 
+
+                                         <select class="form-control form-select text-warning" name="area">
+										     <option>評価を入力</option>
+											 <option th:selected="*{star} == '☆☆☆☆☆'" value="☆☆☆☆☆" class="text-warning">☆☆☆☆☆</option>
+											 <option th:selected="*{star} == '★☆☆☆☆'" value="★☆☆☆☆" class="text-warning">★☆☆☆☆</option>
+											 <option th:selected="*{star} == '★★☆☆☆'" value="★★☆☆☆" class="text-warning">★★☆☆☆</option>
+											 <option th:selected="*{star} == '★★★☆☆'" value="★★★☆☆" class="text-warning">★★★☆☆</option>
+											 <option th:selected="*{star} == '★★★★☆'" value="★★★★☆" class="text-warning">★★★★☆</option>
+											 <option th:selected="*{star} == '★★★★★'" value="★★★★★" class="text-warning">★★★★★</option>
+									</select>		 
+									 </div>	
 								</div>
 							
 									 <div class="form-group row mb-3">
