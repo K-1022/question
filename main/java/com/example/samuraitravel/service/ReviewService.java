@@ -49,19 +49,25 @@ public class ReviewService {
 		review.setComments(reviewForm.getComments());
 		review.setUser(user);
 		review.setHouse(houseId);
+		review.setName(user.getName());
 		
 		reviewRepository.save(review);
 	}
 	
 	@Transactional
-	public void update(ReviewEditForm reviewEditForm) {
+	public void update(ReviewEditForm reviewEditForm, User user, House houseId) {
 		Review review = reviewRepository.getReferenceById(reviewEditForm.getId());
 		
 		review.setStar(reviewEditForm.getStar());
 		review.setComments(reviewEditForm.getComments());
+		review.setUser(user);
+		review.setHouse(houseId);
+		review.setName(user.getName());
 		
 		reviewRepository.save(review);
 	}
+	
+
 
 
 

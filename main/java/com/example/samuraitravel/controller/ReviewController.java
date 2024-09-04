@@ -43,11 +43,16 @@ private final UserRepository userRepository;
 		
 	}
 	
-	@GetMapping("/review")
-	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
-		Page<Review> reviewPage = reviewRepository.findAll(pageable);
-	
+	@GetMapping("/templates/houses/{houseId}/review")
+	public String index(@PathVariable(name = "houseId") Integer houseId,
+			            @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,
+			            Model model) 
+	{
+		Page<Review> reviewPage = reviewRepository.findByHouseId(houseId, pageable);
+		House house = houseRepository.getReferenceById(houseId);
+		
 		model.addAttribute("reviewPage", reviewPage);
+		model.addAttribute("house", house);
 		
 		return "review/index";
 	}   
@@ -71,7 +76,8 @@ private final UserRepository userRepository;
     {
     	
     	House house = houseRepository.getReferenceById(houseId);
-    	User user = userRepository.findByName(userDetailsImpl.getUser().getName());
+    	User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+
     	
     	if(bindingResult.hasErrors()) {
     		model.addAttribute("reviewForm", reviewForm);
@@ -85,13 +91,15 @@ private final UserRepository userRepository;
     	reviewService.create(reviewForm, user, house);
     	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
         
-    	return "redirect:/review";
+    	return "redirect:/houses/{houseId}";
     }
 	
-	@GetMapping("houses/{houseId}/review/{reviewId}/edit")
-	public String edit(@PathVariable(name = "houseId") Integer houseId, Model model) {
+	@GetMapping("/houses/{houseId}/review/{reviewId}/edit")
+	public String edit(@PathVariable(name = "houseId") Integer houseId,
+			           @PathVariable(name = "reviewId") Integer reviewId,
+			           Model model) {
 		House house = houseRepository.getReferenceById(houseId);
-		Review review = reviewRepository.getReferenceById(houseId);
+		Review review = reviewRepository.getReferenceById(reviewId);
 		
 		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getStar(), review.getComments());
 		
@@ -101,15 +109,25 @@ private final UserRepository userRepository;
 		return "review/edit";
 	}
 	    
-	@PostMapping("houses/{houseId}/review/{reviewId}/update")
-	public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		reviewService.update(reviewEditForm);
+	@PostMapping("/houses/{houseId}/review/{reviewId}/update")
+	public String update(@PathVariable(name = "houseId") Integer houseId,
+			             @PathVariable(name = "reviewId") Integer reviewId,
+			             @ModelAttribute @Validated ReviewEditForm reviewEditForm, 
+			             BindingResult bindingResult, 
+			             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+			             RedirectAttributes redirectAttributes)
+	{
+		House house = houseRepository.getReferenceById(houseId);
+		Review review = reviewRepository.getReferenceById(reviewId);
+    	User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+    	
+		reviewService.update(reviewEditForm, user, house);
 		redirectAttributes.addFlashAttribute("successMessage","レビューを編集しました。");
 		
 		return "redirect:/review";
 	}
 
-	@PostMapping("/{id}/delete")
+	@PostMapping("/houses/{houseId}/review/{reviewId}/delete")
 	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
 		reviewRepository.deleteById(id);
 		

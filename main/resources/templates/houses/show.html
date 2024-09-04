@@ -29,7 +29,9 @@
 							
 							<h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
 							
-							
+					         <div th:if="${successMessage}" class="alert alert-info">
+                                 <span th:text="${successMessage}"></span>
+                             </div>
 							
 							<div class="mb-4">
 								<img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}" class="w-100" alt="民宿画像">
@@ -181,11 +183,11 @@
 																             <div class="modal-dialog">
 																	            <div class="modal-content">
 																		           <div class="modal-header">
-																			          <h5 class="modal-title" th:id="${'deleteReviewModalLabel' + review.getId()}" th:text="${house.getName() + 'を削除してもよろしいですか？'}"></h5>
+																			          <h5 class="modal-title" th:id="${'deleteReviewModalLabel' + review.getId()}" th:text="${house.getName() + 'のレビューを削除してもよろしいですか？'}"></h5>
 																			          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
 																		           </div>
 																		           <div class="modal-footer">
-																			          <form method="post" th:action="@{/review/__${review.getId()}__/delete}">
+																			          <form method="post" th:action="@{/houses/__${house.getId()}__/review/__${review.getId()}__/delete}">
 																				         <button type="submit" class="btn samuraitravel-btn-danger text-white shadow-sm">削除</button>
 																			          </form>
 																		           </div>
@@ -212,15 +214,9 @@
 									        </a>
 						                </div>
 			            		    </div>
-			            		    <a class="nav-link text-center text-color mt-4" th:href="@{/review}">すべてのレビューを見る</a>				
+			            		    <a class="nav-link text-center text-color mt-4" th:href="@{/templates/houses/__${house.getId()}__/review}">すべてのレビューを見る</a>				
 				                </div>
 			                </div>
-			                
-			                <div th:if="${successMessage}" class="alert alert-info">
-                                 <span th:text="${successMessage}"></span>
-                             </div>  
-                            
-                            
 					    </div>
 				    </div>
 		        </div>
