@@ -20,7 +20,7 @@
                                  <ol class="breadcrumb mb-0"> 
 									 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
                                      <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>                                     
-                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>                                                     
+                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.id}__}">民宿詳細</a></li>                                                    
                                      <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
                                  </ol>
                              </nav>                     
@@ -67,8 +67,9 @@
 									 <div class="form-group d-flex justify-content-center my-4">
                                      <button type="submit" class="btn text-white shadow-sm w-50 samuraitravel-btn">投稿</button>
                                  </div>
+                                 </form>
                              </div>
-                            </form>
+                            
                              
                          </div>
                      </div>

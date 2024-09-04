@@ -22,6 +22,7 @@ import com.example.samuraitravel.form.ReviewEditForm;
 import com.example.samuraitravel.form.ReviewForm;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
+import com.example.samuraitravel.repository.UserRepository;
 import com.example.samuraitravel.security.UserDetailsImpl;
 import com.example.samuraitravel.service.ReviewService;
 
@@ -31,12 +32,14 @@ public class ReviewController {
 private final ReviewRepository reviewRepository;
 private final ReviewService reviewService;
 private final HouseRepository houseRepository;
+private final UserRepository userRepository;
 	
-	public ReviewController(ReviewRepository reviewRepository, HouseRepository houseRepository,ReviewService reviewService ) {
+	public ReviewController(ReviewRepository reviewRepository, HouseRepository houseRepository,ReviewService reviewService, UserRepository userRepository) {
 		
 		this.reviewRepository = reviewRepository;
 		this.houseRepository = houseRepository;
 		this.reviewService = reviewService;
+		this.userRepository = userRepository;
 		
 	}
 	
@@ -68,15 +71,16 @@ private final HouseRepository houseRepository;
     {
     	
     	House house = houseRepository.getReferenceById(houseId);
+    	User user = userRepository.findByName(userDetailsImpl.getUser().getName());
     	
     	if(bindingResult.hasErrors()) {
     		model.addAttribute("reviewForm", reviewForm);
-    		
-    		return "review/index";
+    		System.out.println(bindingResult);
+    		return "review/contribution";
     	}
     	
-    	User user = userDetailsImpl.getUser();
     	
+    	System.out.println();
     	
     	reviewService.create(reviewForm, user, house);
     	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
