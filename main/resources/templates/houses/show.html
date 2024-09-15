@@ -19,6 +19,7 @@
 				<div class="container pt-4 pb-5 samuraitravel-container">
 					<div class="row justify-content-center">
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<div class="d-flex justify-content-between flex-wrap">
 							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 								<ol class="breadcrumb mb-0">
 									<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
@@ -26,6 +27,22 @@
 									<li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
 								</ol>
 							</nav>
+							
+							<div sec:authorize="isAuthenticated()">
+							　　<div th:if="${#lists.isEmpty(favoritePage)}">
+								 　<form method="post" th:action="@{/houses/__${houseId}__/favorite/create}">
+                                 　　　<button type="submit" class="btn btn-link text-decoration-none right">&#9825お気に入り追加</button>
+							　　　　</form>
+							　　</div>
+							
+							　　<div th:unless="${#lists.isEmpty(favoritePage)}">						 
+                                 　<form method="post" th:action="@{/houses/__${houseId}__/favorite/delete}">	
+					              　　　<button type="submit" class="btn btn-link text-decoration-none right">&#9829お気に入り解除</button>							
+						    　　　</form>
+							　　</div>
+							</div>
+							</div>
+							
 							
 							<h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
 							
@@ -164,7 +181,6 @@
 						
 								     <div class="row row-cols-lg-2 row-cols-2 g-3 mb-7">
 										 <div class="col" th:each="review : ${reviewPage}">
-											 <a th:href="@{/review}" class="link-dark samuraitravel-card-link">
 											   <div th:object="${reservationRegisterForm}">
 										           <div class="card h-100">
 												      <div class="card-body">

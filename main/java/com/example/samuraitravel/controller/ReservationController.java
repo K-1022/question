@@ -49,6 +49,8 @@ public class ReservationController {
 		User user = userDetailsImpl.getUser();
 		Page<Reservation> reservationPage = reservationRepository.findByUserOrderByCreatedAtDesc(user, pageable);
 		
+		System.out.println(user);
+		System.out.println(reservationPage);
 		model.addAttribute("reservationPage", reservationPage);
 		
 		return "reservations/index";

@@ -77,16 +77,11 @@ private final UserRepository userRepository;
     	
     	House house = houseRepository.getReferenceById(houseId);
     	User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
-
     	
     	if(bindingResult.hasErrors()) {
     		model.addAttribute("reviewForm", reviewForm);
-    		System.out.println(bindingResult);
     		return "review/contribution";
     	}
-    	
-    	
-    	System.out.println();
     	
     	reviewService.create(reviewForm, user, house);
     	redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
@@ -104,6 +99,7 @@ private final UserRepository userRepository;
 		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getStar(), review.getComments());
 		
 		model.addAttribute("house", house);
+		model.addAttribute("review", review);
 		model.addAttribute("reviewEditForm", reviewEditForm);
 		
 		return "review/edit";
@@ -118,41 +114,22 @@ private final UserRepository userRepository;
 			             RedirectAttributes redirectAttributes)
 	{
 		House house = houseRepository.getReferenceById(houseId);
-		Review review = reviewRepository.getReferenceById(reviewId);
-    	User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
-    	
+		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+		
 		reviewService.update(reviewEditForm, user, house);
 		redirectAttributes.addFlashAttribute("successMessage","レビューを編集しました。");
 		
-		return "redirect:/review";
+		return "redirect:/houses/{houseId}";
 	}
 
-	@PostMapping("/houses/{houseId}/review/{reviewId}/delete")
-	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+	@PostMapping("houses/{houseId}/review/{reviewId}/delete")
+	public String delete(@PathVariable(name = "houseId") Integer houseId,
+			             @PathVariable(name = "reviewId") Integer id, 
+			             RedirectAttributes redirectAttributes) {
 		reviewRepository.deleteById(id);
 		
 		redirectAttributes.addFlashAttribute("successMessage", "民宿を削除しました。");
 		
-		return "redirect:/houses/show";
+		return "redirect:/houses/{houseId}";
 	}
 }
-
-//@Controller
-//public class ReviewController {
-//	private final ReviewRepository reviewRepository;
-//	
-//	public ReviewController(ReviewRepository reviewRepository) {
-//		this.reviewRepository = reviewRepository;
-//	}
-//	
-//	@GetMapping
-//	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
-//		Page<Review> reviewPage = reviewRepository.findAll(pageable);
-//		Page<Review> newReview = reviewRepository.findAll(pageable);
-//		
-//		model.addAttribute("reviewPage", reviewPage);
-//		model.addAttribute("newReview", newReview);
-//		
-//		return "review/index";
-//	}
-//}

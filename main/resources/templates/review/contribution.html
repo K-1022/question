@@ -25,16 +25,9 @@
                                  </ol>
                              </nav>                     
              
-                             <h1 class="mb-4 text-center">ペンション SAMURAIのレビュー投稿</h1>  
-                             
-<!--                             <div th:object="${reviewForm}">-->
+                             <h1 class="mb-4 text-center"><span th:text="${house.getName()}">民宿名</span> レビュー投稿</h1>  
                              
                              <form method="post" th:action="@{/houses/__${houseId}__/review/create}" th:object="${reviewForm}">
-<!--								 <input type="hidden" th:field="*{houseId}">-->
-<!--                                 <input type="hidden" th:field="*{userId}">-->
-<!--                                 <input type="hidden" th:field="*{star}">-->
-<!--                                 <input type="hidden" th:field="*{comments}">-->
-<!--                                 <input type="hidden" th:field="*{name}">-->
                                  
 								 <div class="form-group row mb-3">
                                      <div class="col-md-4">

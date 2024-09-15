@@ -136,6 +136,13 @@ footer {
 .text-color {
 	color: #0000008C;
 }
+
+.box {
+            background-color: lightgrey;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
 @media screen and (min-width: 140px) {
 	
 .samuraitravel-container{

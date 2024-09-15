@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.samuraitravel.entity.Favorite;
 import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 import com.example.samuraitravel.form.ReservationInputForm;
+import com.example.samuraitravel.repository.FavoriteRepository;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReviewRepository;
 
@@ -24,12 +26,13 @@ import com.example.samuraitravel.repository.ReviewRepository;
 public class HouseController {
 	private final HouseRepository houseRepository;
 	private final ReviewRepository reviewRepository;
+	private final FavoriteRepository favoriteRepository;
 	
 	
-	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository) {
+	public HouseController(HouseRepository houseRepository, ReviewRepository reviewrepository, FavoriteRepository favoriteRepository) {
 		this.houseRepository = houseRepository;
 		this.reviewRepository = reviewrepository;
-		
+		this.favoriteRepository = favoriteRepository;
 	}
 	
 	@GetMapping
@@ -88,11 +91,14 @@ public class HouseController {
 		House house =houseRepository.getReferenceById(id);
         
          List<Review>reviewPage = reviewRepository.findTop6ByHouseIdOrderByCreatedAtDesc(id); 
+         
+         List<Favorite>favoritePage = favoriteRepository.findByHouseIdOrderByCreatedAtDesc(id);
           
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
 		model.addAttribute("houseId", id);
 		model.addAttribute("reviewPage", reviewPage);
+		model.addAttribute("favoritePage", favoritePage);
 			
 		return "houses/show";
 	}

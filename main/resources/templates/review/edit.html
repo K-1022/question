@@ -25,7 +25,7 @@
 								</ol> 
 							</nav>
 							
-							<h1 class="mb-4 text-center">SAMURAIの宿のレビュー編集</h1>
+							<h1 class="mb-4 text-center"><span th:text="${house.getName()}">民宿名</span>レビュー編集</h1>
 							
 							<form method="post" th:action="@{/houses/__${house.id}__/review/__${review.id}__/update}" 
 							th:object="${reviewEditForm}" 
@@ -39,8 +39,8 @@
                                      <div class="col-md-8">
 										 <div th:if="${#fields.hasErrors('star')}" class="text-danger small mb-2" th:errors="*{star}"></div>
 
-                                         <select class="form-control form-select text-warning" name="area">
-										     <option>評価を入力</option>
+                                         <select class="form-control form-select text-warning" th:field="*{star}" name="area">
+<!--										     <option>評価を入力</option>-->
 											 <option th:selected="*{star} == '☆☆☆☆☆'" value="☆☆☆☆☆" class="text-warning">☆☆☆☆☆</option>
 											 <option th:selected="*{star} == '★☆☆☆☆'" value="★☆☆☆☆" class="text-warning">★☆☆☆☆</option>
 											 <option th:selected="*{star} == '★★☆☆☆'" value="★★☆☆☆" class="text-warning">★★☆☆☆</option>

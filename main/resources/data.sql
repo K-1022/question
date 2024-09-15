@@ -106,6 +106,8 @@ INSERT IGNORE INTO review (id, house_id, user_id, name, star, comments) VALUES (
 INSERT IGNORE INTO review (id, house_id, user_id, name, star, comments) VALUES (11, 1, 11, '侍 秋美', '★★★★★', '部屋から見る景色が最高で癒されました。');
 INSERT IGNORE INTO review (id, house_id, user_id, name, star, comments) VALUES (12, 1, 12, '侍 信平', '★★★★☆', 'アメニティがすごくよかったです。');
 
+INSERT IGNORE INTO favorite (id, house_id, user_id) VALUES (1, 1, 1);
+
 
 
 
