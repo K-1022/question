@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.samuraitravel.entity.Favorite;
-import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.User;
 
 
@@ -19,7 +18,8 @@ import com.example.samuraitravel.entity.User;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer>{
 	public Page<Favorite> findByUserOrderByCreatedAtDesc(User user, Pageable pageable);
-	public List<Favorite> findByHouseIdAndUserId(House house, User user);
+	public Favorite findByHouseIdAndUserId(Integer houseId, Integer userId);
 	public List<Favorite> findByHouseIdOrderByCreatedAtDesc(Integer houseId);
-
+	public List<Favorite> findByHouseIdAndUserId(Integer houseId, User userId);
+	
 }

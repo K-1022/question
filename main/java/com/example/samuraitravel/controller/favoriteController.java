@@ -63,8 +63,7 @@ public class favoriteController {
     }
 	
 	@PostMapping("/favorite/{favoriteId}/delete")
-    public String delete(
-    		             @PathVariable(name = "favoriteId") Integer favoriteId,
+    public String delete(@PathVariable(name = "favoriteId") Integer favoriteId,
     		              RedirectAttributes redirectAttributes) {        
         favoriteRepository.deleteById(favoriteId);
        
