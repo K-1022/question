@@ -22,10 +22,10 @@ public class StripeService {
 	 @Value("${stripe.api-key}")
      private String stripeApiKey;
 	 
-     private final UserService userService;
+     private final SalesService salesService;
      
-     public StripeService(UserService userService) {
-         this.userService = userService;
+     public StripeService(SalesService salesService) {
+         this.salesService = salesService;
      }  
 	 
      // セッションを作成し、Stripeに必要な情報を返す
@@ -82,7 +82,7 @@ public class StripeService {
              try {
                  session = Session.retrieve(session.getId(), params, null);
                  Map<String, String> paymentIntentObject = session.getPaymentIntentObject().getMetadata();
-                 userService.create(paymentIntentObject);
+                 salesService.create(paymentIntentObject);
              } catch (StripeException e) {
                  e.printStackTrace();
              }

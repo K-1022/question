@@ -1,13 +1,12 @@
 package com.example.nagoyameshi.service;
 
-import java.util.Map;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.nagoyameshi.entity.Role;
 import com.example.nagoyameshi.entity.User;
+import com.example.nagoyameshi.form.SignupForm;
 import com.example.nagoyameshi.form.UserEditForm;
 import com.example.nagoyameshi.repository.RoleRepository;
 import com.example.nagoyameshi.repository.UserRepository;
@@ -26,31 +25,31 @@ public class UserService {
 
 }
     @Transactional
-    public User create(Map<String, String> paymentIntentObject) {
+    public User create(SignupForm signupForm) {
         User user = new User();
         Role role = roleRepository.findByName("ROLE_GENERAL");
         
-        Integer userId = Integer.valueOf(paymentIntentObject.get("userId"));
+       // Integer userId = Integer.valueOf(signupForm.get("userId"));
         
          //User user = userRepository.getReferenceById(userId);
         
-        String name = (String) paymentIntentObject.get("name");
-        String furigana = (String) paymentIntentObject.get("furigana");
-        String postalCode = (String) paymentIntentObject.get("postalCode");
-        String address = (String) paymentIntentObject.get("address");
-        String phoneNumber = (String) paymentIntentObject.get("phoneNumber");
-        String email = (String) paymentIntentObject.get("email");
-        String password = (String) paymentIntentObject.get("password");
-        String consent = (String) paymentIntentObject.get("consent");
+//        String name = (String) signupForm.get("name");
+//        String furigana = (String) signupForm.get("furigana");
+//        String postalCode = (String) signupForm.get("postalCode");
+//        String address = (String) signupForm.get("address");
+//        String phoneNumber = (String) signupForm.get("phoneNumber");
+//        String email = (String) signupForm.get("email");
+//        String password = (String) signupForm.get("password");
+//        String consent = (String) signupForm.get("consent");
         
-        user.setName(name);
-        user.setFurigana(furigana);
-        user.setPostalCode(postalCode);
-        user.setAddress(address);
-        user.setPhoneNumber(phoneNumber);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setConsent(consent);
+        user.setName(signupForm.getName());
+        user.setFurigana(signupForm.getFurigana());
+        user.setPostalCode(signupForm.getPostalCode());
+        user.setAddress(signupForm.getAddress());
+        user.setPhoneNumber(signupForm.getPhoneNumber());
+        user.setEmail(signupForm.getEmail());
+        user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
+        user.setConsent(signupForm.getConsent());
         user.setRole(role);
         user.setEnabled(false);        
         
@@ -94,5 +93,5 @@ public class UserService {
         User currentUser = userRepository.getReferenceById(userEditForm.getId());
         return !userEditForm.getEmail().equals(currentUser.getEmail());      
     }
-	
+
 }
