@@ -1,5 +1,8 @@
 package com.example.nagoyameshi.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,7 +69,17 @@ public class AuthController {
             return "auth/signup";
         }
         
-        User createdUser = userService.create(signupForm);
+//        User createdUser = userService.create(signupForm);
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("name", signupForm.getName());
+        userInfo.put("email", signupForm.getEmail());
+        userInfo.put("address",signupForm.getAddress());
+        userInfo.put("conset",signupForm.getConsent());
+        userInfo.put("furigana",signupForm.getFurigana());
+        userInfo.put("password",signupForm.getPassword());
+        userInfo.put("phoneNumber",signupForm.getPhoneNumber());
+        userInfo.put("postalCode",signupForm.getPostalCode());
+        User createdUser = userService.create(userInfo);
         String requestUrl = new String(httpServletRequest.getRequestURL());
         signupEventPublisher.publishSignupEvent(createdUser, requestUrl);
         redirectAttributes.addFlashAttribute("successMessage", "ご入力いただいたメールアドレスに認証メールを送信しました。メールに記載されているリンクをクリックし、会員登録を完了してください。");        

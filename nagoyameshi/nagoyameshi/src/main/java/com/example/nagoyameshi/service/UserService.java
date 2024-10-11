@@ -93,5 +93,6 @@ public class UserService {
     public boolean isEmailChanged(UserEditForm userEditForm) {
         User currentUser = userRepository.getReferenceById(userEditForm.getId());
         return !userEditForm.getEmail().equals(currentUser.getEmail());      
-    }  
+    }
+	
 }
